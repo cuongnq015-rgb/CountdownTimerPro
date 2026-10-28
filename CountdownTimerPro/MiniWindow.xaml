@@ -1,0 +1,294 @@
+﻿<Window x:Class="CountdownTimerPro.MiniWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Mini"
+        Width="240"
+        Height="115"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <Window.Resources>
+
+        <!-- Màu -->
+        <SolidColorBrush x:Key="BgBrush" Color="#DD202020"/>
+        <SolidColorBrush x:Key="BorderBrushEx" Color="#00C853"/>
+        <SolidColorBrush x:Key="HoverBrush" Color="#303030"/>
+
+        <!-- Style Button Icon -->
+        <Style x:Key="MiniIconButtonStyle"
+               TargetType="Button">
+
+            <Setter Property="Width"
+                    Value="20"/>
+
+            <Setter Property="Height"
+                    Value="20"/>
+
+            <Setter Property="Margin"
+                    Value="1"/>
+
+            <Setter Property="FontSize"
+                    Value="11"/>
+
+            <Setter Property="Foreground"
+                    Value="White"/>
+
+            <Setter Property="Background"
+                    Value="Transparent"/>
+
+            <Setter Property="BorderBrush"
+                    Value="Transparent"/>
+
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="Button">
+
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="4">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#404040"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#606060"/>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+    </Window.Resources>
+
+    <Border x:Name="MainBorder"
+            Background="{StaticResource BgBrush}"
+            BorderBrush="{StaticResource BorderBrushEx}"
+            BorderThickness="2"
+            CornerRadius="10">
+
+        <Grid Margin="8">
+
+            <Grid.RowDefinitions>
+
+                <!-- Header -->
+                <RowDefinition Height="18"/>
+
+                <!-- Time -->
+                <RowDefinition Height="42"/>
+
+                <!-- Progress -->
+                <RowDefinition Height="6"/>
+
+                <!-- Footer -->
+                <RowDefinition Height="28"/>
+
+            </Grid.RowDefinitions>
+
+            <!-- ================= HEADER ================= -->
+
+            <Grid Grid.Row="0">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    x:Name="txtTitle"
+                    Text="⏳ COUNTDOWN"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    VerticalAlignment="Center"/>
+
+                <TextBlock
+                    Grid.Column="1"
+                    x:Name="txtPercent"
+                    Text="100%"
+                    FontSize="10"
+                    FontWeight="SemiBold"
+                    Foreground="White"
+                    VerticalAlignment="Center"/>
+
+            </Grid>
+
+            <!-- ================= TIME ================= -->
+
+            <TextBlock
+                Grid.Row="1"
+                x:Name="txtMiniTime"
+                Text="05:00"
+                FontFamily="Consolas"
+                FontSize="34"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="#00FF66"/>
+
+            <!-- ================= PROGRESS ================= -->
+
+            <Border
+                Grid.Row="2"
+                Background="#404040"
+                CornerRadius="3">
+
+                <Border
+                    x:Name="progressFill"
+                    Width="224"
+                    HorizontalAlignment="Left"
+                    Background="#00C853"
+                    CornerRadius="3"/>
+
+            </Border>
+
+            <!-- ================= FOOTER ================= -->
+            <Grid Grid.Row="3">
+
+                <Grid.ColumnDefinitions>
+
+                    <!-- Status -->
+                    <ColumnDefinition Width="*"/>
+
+                    <!-- Toolbar -->
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <!-- ================= STATUS ================= -->
+
+                <StackPanel
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center">
+
+                    <Ellipse
+                        x:Name="statusDot"
+                        Width="8"
+                        Height="8"
+                        Fill="#00C853"
+                        Margin="2,0,4,0"/>
+
+                    <TextBlock
+                        x:Name="txtStatus"
+                        Text="READY"
+                        FontSize="10"
+                        FontWeight="Bold"
+                        Foreground="#00FF66"
+                        VerticalAlignment="Center"/>
+
+                </StackPanel>
+
+                <!-- ================= TOOLBAR ================= -->
+
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+
+                    <!-- START -->
+
+                    <Button
+                        x:Name="btnMiniStart"
+                        Style="{StaticResource MiniIconButtonStyle}"
+                        ToolTip="Start"
+                        Content="▶"
+                        Click="btnMiniStart_Click"/>
+
+                    <!-- STOP -->
+
+                    <Button
+                        x:Name="btnMiniStop"
+                        Style="{StaticResource MiniIconButtonStyle}"
+                        ToolTip="Stop"
+                        Content="⏸"
+                        Click="btnMiniStop_Click"/>
+
+                    <!-- RESET -->
+
+                    <Button
+                        x:Name="btnMiniReset"
+                        Style="{StaticResource MiniIconButtonStyle}"
+                        ToolTip="Reset"
+                        Content="↺"
+                        Click="btnMiniReset_Click"/>
+
+                    <!-- SETTINGS -->
+
+                    <Button
+                        x:Name="btnMiniSetting"
+                        Style="{StaticResource MiniIconButtonStyle}"
+                        ToolTip="Settings"
+                        Content="⚙"
+                        Click="btnMiniSetting_Click"/>
+
+                    <!-- MAIN -->
+
+                    <Button
+                        x:Name="btnMiniMain"
+                        Style="{StaticResource MiniIconButtonStyle}"
+                        ToolTip="Main Window"
+                        Content="⌂"
+                        Click="btnMiniMain_Click"/>
+
+                    <!-- EXIT -->
+
+                    <Button
+                        x:Name="btnMiniExit"
+                        Style="{StaticResource MiniIconButtonStyle}"
+                        ToolTip="Exit"
+                        Content="✕"
+                        Foreground="#FF6B6B"
+                        Click="btnMiniExit_Click"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+    </Border>
+
+</Window>
